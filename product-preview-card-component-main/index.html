@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- displays site properly based on user's device -->
+	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:500,700|Fraunces:700">
+	<title>Frontend Mentor | Product preview card component</title>
+</head>
+
+<body>
+	<div class="product-card">
+		<img class="card-image" src="images/image-product-desktop.jpg" alt="Perfume bottle">
+		<div class="card-content">
+			<small class="card-sub-heading">Perfume</small>
+			<h1 class="card-heading">Gabrielle Essence Eau De Parfum</h1>
+			<p class="card-description">
+				A floral, solar and voluptuous interpretation composed by Olivier Polge,
+				Perfumer-Creator for the House of CHANEL.
+			</p>
+			<div class="card-price-area">
+				<span class="price">
+					$149.99
+				</span>
+				<div class="price-was">
+					$169.99
+				</div>
+			</div>
+			<button class="btn btn-primary"><img src="images/icon-cart.svg" alt="Cart icon">Add to Cart</button>
+		</div>
+	</div>
+
+	<div class="attribution">
+		Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+		Coded by <a href="https://ivydingeman.com">Ivy Dingeman</a>.
+	</div>
+	<style>
+		:root {
+			--bg: hsl(30, 38%, 92%);
+			--brand: #3c8067;
+			--brand-hover: #1A4031;
+
+			--text-dark: hsl(212, 21%, 14%);
+			--text-light: hsl(228, 12%, 48%);
+			--text-white: hsl(0, 0%, 100%);
+
+			--font-main: Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+			--font-head: Fraunces, 'Times New Roman', Times, serif;
+		}
+
+		*:not(style, script, head, template) {
+			box-sizing: border-box;
+			margin: unset;
+			padding: unset;
+			line-height: 1;
+			border: none;
+		}
+
+		::-moz-selection {
+			color: white;
+			background: var(--brand);
+		}
+
+		::selection {
+			color: white;
+			background: var(--brand);
+		}
+
+		body {
+			display: grid;
+			place-items: center;
+			justify-content: center;
+			height: 100vh;
+			width: 100vw;
+			background-color: var(--bg);
+			font-family: var(--font-main);
+			font-weight: 500;
+			gap: 24px;
+			padding: 16px;
+		}
+
+		.attribution {
+			bottom: 20px;
+			position: absolute;
+			font-size: 11px;
+			text-align: center;
+		}
+
+		.attribution a {
+			color: hsl(228, 45%, 44%);
+		}
+
+		.product-card {
+			display: flex;
+			background-color: white;
+			border-radius: 8px;
+			width: 600px;
+			overflow: hidden;
+		}
+
+		.card-image {
+			width: 50%;
+			user-select: none;
+			pointer-events: none;
+			/* image shrinks in firefox without this... */
+			flex-shrink: 0;
+		}
+
+		.card-content {
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+			padding: 32px;
+		}
+
+		.card-sub-heading {
+			text-transform: uppercase;
+			font-size: 12px;
+			letter-spacing: 5px;
+			color: var(--text-light);
+			line-height: 1.4;
+		}
+
+		.card-heading {
+			font-family: var(--font-head);
+			color: var(--text-dark);
+			font-size: 32px;
+		}
+
+		.card-description {
+			color: var(--text-light);
+			font-size: 14px;
+			line-height: 1.7;
+		}
+
+		.card-price-area {
+			display: flex;
+			gap: 20px;
+			align-items: center;
+		}
+
+		.price {
+			font-family: var(--font-head);
+			color: var(--brand);
+			font-size: 32px;
+		}
+
+		.price-was {
+			color: var(--text-light);
+			text-decoration: line-through;
+			font-size: 14px;
+		}
+
+		.btn {
+			transition: background-color .1s ease-out, transform .2s ease-out;
+			display: flex;
+			font-size: 14px;
+			font-weight: 700;
+			letter-spacing: 1px;
+			align-items: center;
+			justify-content: center;
+			gap: 14px;
+			padding: 16px;
+			border-radius: 8px;
+		}
+
+		.btn-primary {
+			background-color: var(--brand);
+			color: var(--text-white);
+		}
+
+		.btn:hover {
+			background-color: var(--brand-hover);
+		}
+
+		.btn:active {
+			transform: scale(.95);
+		}
+
+		@media screen and (max-width: 600px) {
+			.product-card {
+				width: unset;
+				max-width: 400px;
+				flex-direction: column;
+			}
+
+			.card-image {
+				width: 100%;
+				aspect-ratio: 343/240;
+				object-fit: cover;
+			}
+
+			.card-content {
+				gap: 16px;
+				padding: 24px;
+			}
+
+			.card-sub-heading {
+				line-height: 1.2;
+			}
+		}
+
+		@media screen and (max-height: 700px) {
+			body {
+				height: unset;
+			}
+
+			.attribution {
+				position: unset;
+			}
+
+		}
+
+	</style>
+</body>
+
+</html>
