@@ -14,8 +14,9 @@
 
 <body>
 	<div class="advice-card">
-		<h1 class="advice-header">Advice <span class="advice-number">#</span></h1>
-		<p class="advice-text">...</p>
+		<h1 class="advice-header">Advice <span class="advice-number">#117</span></h1>
+		<p class="advice-text">“It is easy to sit up and take notice, what's difficult is getting up and taking action.”
+		</p>
 		<img src="images/pattern-divider-desktop.svg" class="advice-separator" alt="divider">
 		<button class="dice-button">
 			<img src="images/icon-dice.svg" alt="Generate new advice">
@@ -44,8 +45,6 @@
 				const oldHeight = text.offsetHeight
 				text.textContent = `“${res.slip.advice}”`
 				const newHeight = text.offsetHeight
-				console.log(`${oldHeight} -> ${newHeight}`)
-
 
 				if (!prefersReducedMotion) {
 					text.animate({
@@ -63,7 +62,8 @@
 				}, 1000);
 			}
 
-			showNewAdvice()
+			// hardcode initial advice for the frontendmentor screenshot ;)
+			// showNewAdvice()
 			button.addEventListener('click', showNewAdvice)
 		})()
 	</script>
@@ -120,7 +120,6 @@
 		.attribution a {
 			color: var(--brand);
 		}
-
 
 		.advice-card {
 			position: relative;
