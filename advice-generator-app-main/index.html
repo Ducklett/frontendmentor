@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- displays site properly based on user's device -->
+	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Manrope:800">
+
+	<title>Frontend Mentor | Advice generator app</title>
+
+</head>
+
+<body>
+	<div class="advice-card">
+		<h1 class="advice-header">Advice <span class="advice-number">#</span></h1>
+		<p class="advice-text">...</p>
+		<img src="images/pattern-divider-desktop.svg" class="advice-separator" alt="divider">
+		<button class="dice-button">
+			<img src="images/icon-dice.svg" alt="Generate new advice">
+		</button>
+	</div>
+
+	<div class="attribution">
+		Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+		Coded by <a href="https://ivydingeman.com">Ivy Dingeman</a>.
+	</div>
+	<script>
+		; (async () => {
+			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+			const button = document.querySelector('.dice-button')
+			const numberLabel = document.querySelector('.advice-number')
+			const text = document.querySelector('.advice-text')
+
+			async function showNewAdvice() {
+				button.disabled = true
+
+				const res = await fetch('https://api.adviceslip.com/advice')
+					.then(res => res.json())
+
+				numberLabel.textContent = `#${res.slip.id}`
+				const oldHeight = text.offsetHeight
+				text.textContent = `“${res.slip.advice}”`
+				const newHeight = text.offsetHeight
+				console.log(`${oldHeight} -> ${newHeight}`)
+
+
+				if (!prefersReducedMotion) {
+					text.animate({
+						height: [oldHeight + 'px', newHeight + 'px'],
+						opacity: [0, 1],
+						transform: ['scale(50%)', 'scale(100%)'],
+					}, {
+						easing: 'cubic-bezier(0, 0, 0, 1.19)',
+						duration: 500,
+					})
+				}
+
+				setTimeout(() => {
+					button.disabled = false
+				}, 1000);
+			}
+
+			showNewAdvice()
+			button.addEventListener('click', showNewAdvice)
+		})()
+	</script>
+	<style>
+		:root {
+			--text: hsl(193, 38%, 86%);
+			--brand: hsl(150, 100%, 66%);
+			--bg-light: hsl(217, 19%, 38%);
+			--bg-dark: hsl(217, 19%, 24%);
+			--bg-darker: hsl(218, 23%, 16%);
+
+			--font-main: Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		}
+
+		*:not(style, script, head, template) {
+			box-sizing: border-box;
+			margin: unset;
+			padding: unset;
+			line-height: 1;
+			border: none;
+		}
+
+		::-moz-selection {
+			color: var(--bg-darker);
+			background: var(--brand);
+		}
+
+		::selection {
+			color: var(--bg-darker);
+			background: var(--brand);
+		}
+
+		body {
+			display: grid;
+			place-items: center;
+			justify-content: center;
+			height: 100vh;
+			width: 100vw;
+			background-color: var(--bg-darker);
+			font-family: var(--font-main);
+			font-weight: 800;
+			gap: 24px;
+			padding: 16px;
+		}
+
+		.attribution {
+			position: absolute;
+			bottom: 20px;
+			color: var(--text);
+			font-size: 11px;
+			text-align: center;
+		}
+
+		.attribution a {
+			color: var(--brand);
+		}
+
+
+		.advice-card {
+			position: relative;
+			font-size: 28px;
+			color: var(--text);
+			width: min(540px, 100%);
+			background-color: var(--bg-dark);
+			border-radius: 16px;
+			padding: 50px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 24px;
+			box-shadow: 0px 12px 40px rgb(0 0 0 / 19%);
+		}
+
+		.advice-card img {
+			user-select: none;
+			pointer-events: none;
+		}
+
+		.advice-header {
+			color: var(--brand);
+			font-size: 14px;
+			text-transform: uppercase;
+			letter-spacing: 4px;
+		}
+
+		.advice-text {
+			transition: opacity .3s ease-out;
+			line-height: 1.4;
+			text-align: center;
+			margin-bottom: 15px;
+		}
+
+		.advice-separator {
+			width: 100%;
+			height: 16px;
+			object-fit: cover;
+			margin-bottom: 22px;
+		}
+
+		.dice-button {
+			position: absolute;
+			bottom: -32px;
+			padding: 20px;
+			background-color: var(--brand);
+			border-radius: 999px;
+			box-shadow: 0 0 30px var(--brand);
+			transition: box-shadow .3s cubic-bezier(0, 0, 0.41, 2.17), background-color .3s ease-out;
+
+		}
+
+		.dice-button:not(:disabled) {
+			cursor: pointer;
+		}
+
+		.dice-button:hover {
+			box-shadow: 0 0 40px var(--brand);
+			filter: brightness(120%);
+		}
+
+		.dice-button:disabled,
+		.dice-button:active {
+			background-color: var(--bg-light);
+			box-shadow: 0 0 0px var(--brand);
+			filter: brightness(100%);
+		}
+
+		/* fix line-height messing up our 1/1 aspect ratio */
+		.dice-button>* {
+			display: block;
+		}
+
+		@media (prefers-reduced-motion) {
+
+			/* disable transitions */
+			* {
+				transition: none !important;
+			}
+
+			/* reduce size jumping */
+			.advice-text {
+				min-height: 240px;
+				display: flex;
+				align-items: center;
+			}
+
+			/* less extreme color shifts */
+			.dice-button:disabled,
+			.dice-button:active {
+				background-color: var(--brand);
+				box-shadow: 0 0 30px var(--brand);
+				opacity: .8;
+			}
+		}
+
+		@media screen and (max-width: 600px) {
+			.advice-card {
+				padding: 45px 24px;
+				font-size: 24px;
+				border-radius: 8px;
+			}
+
+			.advice-header {
+				font-size: 10px;
+			}
+
+			.advice-text {
+				margin-bottom: 0px;
+			}
+		}
+
+		@media screen and (max-height: 700px) and (max-width: 350px) {
+			body {
+				display: block;
+				height: unset;
+			}
+
+			.advice-card {
+				margin-bottom: 60px;
+			}
+
+			.attribution {
+				position: unset;
+			}
+		}
+
+	</style>
+</body>
+
+</html>
